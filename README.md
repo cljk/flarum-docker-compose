@@ -28,7 +28,17 @@ Enter following data for db link:
 * Mysql Password: flarum
 * Table Prefix: 
 
+## Warning
 
+You´ll get a startup error on windows machines if you didn´t set 
+`git config core.autocrlf` to `false`
+* see [https://stackoverflow.com/questions/1967370/git-replacing-lf-with-crlf]
+
+Just call
+```
+git config --global core.autocrlf false
+```
+(delete everything and recheckout the project).
 
 # Flarum
 HTTP exposed at 8180
