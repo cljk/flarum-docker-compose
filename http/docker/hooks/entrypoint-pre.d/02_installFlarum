@@ -1,0 +1,10 @@
+#!/bin/bash
+
+echo ... ... ... install flarum .
+
+cd /var/www/html
+ls -lh
+
+# compare
+#   http://flarum.org/docs/installation
+composer create-project flarum/flarum /var/www/html --stability=beta && rm /hooks/entrypoint-pre.d/02_installFlarum
