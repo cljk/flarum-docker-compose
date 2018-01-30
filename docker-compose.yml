@@ -1,0 +1,54 @@
+version: '2'
+services:
+  httpd:
+    build: http
+    depends_on:
+      - database
+      - mailhog
+    links:
+      - database:db
+      - mailhog:mail
+    ports:
+      - 8080:8080
+    volumes:
+      - ./data/www_html:/var/www/html
+      - ./data/composer:/root/.composer
+
+  database:
+    image: mysql:5.7
+    environment:
+      - MYSQL_ROOT_PASSWORD=dockerPWDroot
+      - MYSQL_DATABASE=flarum
+      - MYSQL_USER=flarum
+      - MYSQL_PASSWORD=flarum
+    ports:
+      - 3306:3306
+    expose:
+      - "3306"
+    volumes:
+#      - ./data:/data
+      - ./data/database:/var/lib/mysql
+      - ./config/database/mysql-conf.d:/etc/mysql/conf.d
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    depends_on:
+      - database
+    links:
+      - database:db
+    ports:
+      - 8081:80
+    environment:
+      PMA_USER: root
+      PMA_PASSWORD: dockerPWDroot
+
+
+  mailhog:
+      image: mailhog/mailhog:latest
+      ports:
+#        - "1025:1025"
+        - "8025:8025"
+      expose:
+        - 1025
+
+
